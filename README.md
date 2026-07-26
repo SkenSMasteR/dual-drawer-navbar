@@ -9,6 +9,17 @@ A clean, modern navigation component with sliding sidebars and a minimal notific
 - CSS3 (transitions, flexbox, custom properties)
 - Vanilla JavaScript (ES6)
 
+## Third-Party Assets
+<details>
+<summary><strong>Logo</strong></summary>
+
+- **House logo**
+  - **Source:** https://www.vecteezy.com/vector-art/226305-house-logo-vector
+  - **Author:** **Pien Duijverman**
+
+</details>
+
+
 ## Notification API
 
 <details>
