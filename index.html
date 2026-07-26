@@ -15,12 +15,14 @@
       width: 100%;
       height: 100%;
       background: #1E1E1E;
+      overflow: hidden;
     }
 
     body {
       display: flex;
       align-items: flex-start;
       justify-content: center;
+      position: relative;
     }
 
     .navbar {
@@ -33,6 +35,8 @@
       justify-content: space-between;
       padding: 0 20px;
       margin: 20px 20px 0 20px;
+      position: relative;
+      z-index: 20;
     }
 
     .nav-btn {
@@ -47,6 +51,8 @@
       border: none;
       cursor: pointer;
       padding: 0;
+      position: relative;
+      z-index: 30;
     }
 
     .nav-btn img {
@@ -60,13 +66,70 @@
       width: auto;
       display: block;
       object-fit: contain;
-      padding: 0;
+      padding: 2px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 104px;
+      left: 0;
+      width: 260px;
+      height: calc(100% - 124px);
+      background-color: #EFEFEF;
+      border-top-right-radius: 100px;
+      border-bottom-right-radius: 100px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      z-index: 10;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-logo {
+      width: 100%;
+      padding: 16px 0 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .sidebar-logo img {
+      width: 40%;
+      height: auto;
+      display: block;
+      border-radius: 100%;
+      object-fit: contain;
+      background-color: transparent;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 5;
+      display: none;
+      pointer-events: none;
+    }
+
+    .overlay.active {
+      display: block;
+      pointer-events: auto;
     }
   </style>
 </head>
 <body>
   <div class="navbar">
-    <button class="nav-btn" type="button">
+    <button class="nav-btn" type="button" id="menuBtn">
       <img src="/assets/icons/menu.svg" alt="">
     </button>
     <img src="/assets/logo.png" alt="" class="nav-logo">
@@ -74,5 +137,48 @@
       <img src="/assets/icons/user.svg" alt="">
     </button>
   </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="/assets/logo.png" alt="logo">
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const menuBtn = document.getElementById('menuBtn');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+
+      menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+
+      overlay.addEventListener('click', closeSidebar);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+          closeSidebar();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
