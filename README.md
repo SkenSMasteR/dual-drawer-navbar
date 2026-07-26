@@ -147,3 +147,7 @@ notification.trigger('Invalid type test', 'warning')
 ```
 
 </details>
+
+## Author
+
+SkenS - https://github.com/SkenSMasteR
