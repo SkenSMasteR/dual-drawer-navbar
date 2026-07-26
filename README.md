@@ -30,12 +30,6 @@ A clean, modern navigation component with sliding sidebars and a minimal notific
 
 </details>
 
-## Technologies Used
-
-- HTML5
-- CSS3 (transitions, flexbox, custom properties)
-- Vanilla JavaScript (ES6)
-
 ## Third-Party Assets
 <details>
 <summary><strong>Logo</strong></summary>
