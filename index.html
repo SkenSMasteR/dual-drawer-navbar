@@ -239,6 +239,86 @@
       display: block;
       pointer-events: auto;
     }
+
+    .toast-container {
+      position: fixed;
+      top: 104px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      width: auto;
+      max-width: 90%;
+    }
+
+    .toast {
+      background-color: #EFEFEF;
+      color: #1E1E1E;
+      padding: 10px 24px 10px 20px;
+      border-radius: 100px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(-12px) scale(0.96);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      white-space: nowrap;
+      border: 1px solid rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(2px);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .toast-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 100%;
+      background: #b0b0b0;
+      flex-shrink: 0;
+    }
+
+    .toast.info .toast-dot {
+      background: #1E90FF;
+    }
+    .toast.success .toast-dot {
+      background: #28A745;
+    }
+    .toast.error .toast-dot {
+      background: #DC3545;
+    }
+    .toast.none .toast-dot {
+      background: #a0a0a0;
+    }
+
+    .toast-message {
+      display: inline-block;
+    }
+
+    .toast {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    @media (max-width: 500px) {
+      .toast {
+        padding: 8px 16px 8px 14px;
+        font-size: 14px;
+        gap: 6px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -275,6 +355,8 @@
     <button class="logout-btn" type="button">Log Out</button>
   </div>
 
+  <div class="toast-container" id="toastContainer"></div>
+
   <script>
     (function() {
       const menuBtn = document.getElementById('menuBtn');
@@ -282,6 +364,7 @@
       const sidebarLeft = document.getElementById('sidebarLeft');
       const sidebarRight = document.getElementById('sidebarRight');
       const overlay = document.getElementById('overlay');
+      const toastContainer = document.getElementById('toastContainer');
 
       function closeAll() {
         sidebarLeft.classList.remove('open');
@@ -318,6 +401,48 @@
           closeAll();
         }
       });
+
+      window.notification = {
+        trigger: function(message, type) {
+          const validTypes = ['info', 'error', 'success', 'none'];
+          let toastType = 'none';
+          if (type && validTypes.includes(type.toLowerCase())) {
+            toastType = type.toLowerCase();
+          }
+
+          let displayMessage = message;
+          if (!message || message.trim() === '') {
+            displayMessage = toastType.charAt(0).toUpperCase() + toastType.slice(1);
+          }
+
+          const toast = document.createElement('div');
+          toast.className = 'toast ' + toastType;
+
+          const dot = document.createElement('span');
+          dot.className = 'toast-dot';
+          toast.appendChild(dot);
+
+          const msgSpan = document.createElement('span');
+          msgSpan.className = 'toast-message';
+          msgSpan.textContent = displayMessage;
+          toast.appendChild(msgSpan);
+
+          toastContainer.appendChild(toast);
+
+          requestAnimationFrame(() => {
+            toast.classList.add('show');
+          });
+
+          setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+              if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+              }
+            }, 300);
+          }, 3000);
+        }
+      };
     })();
   </script>
 </body>
