@@ -2,6 +2,25 @@
 
 A clean, modern navigation component with sliding sidebars and a minimal notification toast system.
 
+## Screenshots
+
+<details>
+<summary><strong>Design</strong></summary>
+
+<br>
+
+![Screenshot](.github/assets/screenshot.png)
+
+</details>
+
+<details>
+<summary><strong>Live</strong></summary>
+
+<br>
+
+![Screenshot](.github/assets/screenshot_live.png)
+
+</details>
 
 ## Technologies Used
 
