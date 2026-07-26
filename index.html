@@ -69,7 +69,7 @@
       padding: 2px;
     }
 
-    .sidebar {
+    .sidebar-left {
       position: fixed;
       top: 104px;
       left: 0;
@@ -88,7 +88,7 @@
       box-shadow: 4px 0 10px rgba(0,0,0,0.1);
     }
 
-    .sidebar.open {
+    .sidebar-left.open {
       transform: translateX(0);
     }
 
@@ -107,6 +107,100 @@
       border-radius: 100%;
       object-fit: contain;
       background-color: transparent;
+    }
+
+    .sidebar-right {
+      position: fixed;
+      top: 104px;
+      right: 0;
+      width: 260px;
+      height: calc(100% - 124px);
+      background-color: #EFEFEF;
+      border-top-left-radius: 100px;
+      border-bottom-left-radius: 100px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      z-index: 10;
+      box-shadow: -4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-right.open {
+      transform: translateX(0);
+    }
+
+    .user-pfp {
+      width: 80px;
+      height: 80px;
+      background-color: #D9D9D9;
+      border-radius: 100%;
+      margin-top: 16px;
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: #1E1E1E;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .user-handle {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      color: #666666;
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .user-buttons {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 0 10px;
+      flex: 1;
+    }
+
+    .user-btn {
+      width: 100%;
+      height: 44px;
+      background-color: #D9D9D9;
+      border: none;
+      border-radius: 100px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1E1E1E;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .logout-btn {
+      width: 100%;
+      height: 44px;
+      background-color: #D9D9D9;
+      border: none;
+      border-radius: 100px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1E1E1E;
+      cursor: pointer;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+      padding: 0;
     }
 
     .overlay {
@@ -133,49 +227,73 @@
       <img src="/assets/icons/menu.svg" alt="">
     </button>
     <img src="/assets/logo.png" alt="" class="nav-logo">
-    <button class="nav-btn" type="button">
+    <button class="nav-btn" type="button" id="userBtn">
       <img src="/assets/icons/user.svg" alt="">
     </button>
   </div>
 
   <div class="overlay" id="overlay"></div>
 
-  <div class="sidebar" id="sidebar">
+  <div class="sidebar-left" id="sidebarLeft">
     <div class="sidebar-logo">
       <img src="/assets/logo.png" alt="logo">
     </div>
   </div>
 
+  <div class="sidebar-right" id="sidebarRight">
+    <div class="user-pfp"></div>
+    <div class="user-name">John Doe</div>
+    <div class="user-handle">@johndoe</div>
+    <div class="user-buttons">
+      <button class="user-btn" type="button">Settings</button>
+      <button class="user-btn" type="button">Profile</button>
+      <button class="user-btn" type="button">Notifications</button>
+      <button class="user-btn" type="button">Privacy</button>
+    </div>
+    <button class="logout-btn" type="button">Log Out</button>
+  </div>
+
   <script>
     (function() {
       const menuBtn = document.getElementById('menuBtn');
-      const sidebar = document.getElementById('sidebar');
+      const userBtn = document.getElementById('userBtn');
+      const sidebarLeft = document.getElementById('sidebarLeft');
+      const sidebarRight = document.getElementById('sidebarRight');
       const overlay = document.getElementById('overlay');
 
-      function openSidebar() {
-        sidebar.classList.add('open');
-        overlay.classList.add('active');
-      }
-
-      function closeSidebar() {
-        sidebar.classList.remove('open');
+      function closeAll() {
+        sidebarLeft.classList.remove('open');
+        sidebarRight.classList.remove('open');
         overlay.classList.remove('active');
       }
 
       menuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (sidebar.classList.contains('open')) {
-          closeSidebar();
+        if (sidebarLeft.classList.contains('open')) {
+          closeAll();
         } else {
-          openSidebar();
+          closeAll();
+          sidebarLeft.classList.add('open');
+          overlay.classList.add('active');
         }
       });
 
-      overlay.addEventListener('click', closeSidebar);
+      userBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebarRight.classList.contains('open')) {
+          closeAll();
+        } else {
+          closeAll();
+          sidebarRight.classList.add('open');
+          overlay.classList.add('active');
+        }
+      });
+
+      overlay.addEventListener('click', closeAll);
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-          closeSidebar();
+        if (e.key === 'Escape') {
+          closeAll();
         }
       });
     })();
