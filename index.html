@@ -26,7 +26,7 @@
     }
 
     .navbar {
-      width: 100%;
+      width: calc(100% - 40px);
       height: 64px;
       background-color: #EFEFEF;
       border-radius: 100px;
@@ -130,6 +130,26 @@
 
     .sidebar-right.open {
       transform: translateX(0);
+    }
+
+    .notification-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      background-color: #D9D9D9;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .notification-icon img {
+      width: 20px;
+      height: 20px;
+      display: block;
     }
 
     .user-pfp {
@@ -241,13 +261,15 @@
   </div>
 
   <div class="sidebar-right" id="sidebarRight">
+    <div class="notification-icon">
+      <img src="/assets/icons/notifications.svg" alt="">
+    </div>
     <div class="user-pfp"></div>
     <div class="user-name">John Doe</div>
     <div class="user-handle">@johndoe</div>
     <div class="user-buttons">
       <button class="user-btn" type="button">Settings</button>
       <button class="user-btn" type="button">Profile</button>
-      <button class="user-btn" type="button">Notifications</button>
       <button class="user-btn" type="button">Privacy</button>
     </div>
     <button class="logout-btn" type="button">Log Out</button>
