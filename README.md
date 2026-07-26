@@ -2,6 +2,8 @@
 
 A clean, modern navigation component with sliding sidebars and a minimal notification toast system.
 
+[![Live Preview](https://img.shields.io/badge/Live%20Preview-GitHub%20Pages-blue?style=for-the-badge&logo=github)](https://SkenSMasteR.github.io/dual-drawer-navbar/)
+
 ![GitHub stars](https://img.shields.io/github/stars/SkenSMasteR/dual-drawer-navbar?style=flat)
 ![GitHub issues](https://img.shields.io/github/issues/SkenSMasteR/dual-drawer-navbar)
 ![GitHub license](https://img.shields.io/github/license/SkenSMasteR/dual-drawer-navbar)
